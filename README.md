@@ -14,11 +14,16 @@ git clone https://github.com/akomaragiri/AirflowDocker.git
 cd AirflowDocker
 mkdir input_files
 mkdir output_files
-virtualenv -p python3.7 venv && source venv/bin/activate
 ```
 
 ## Installation
 ```sh
+** For Unix Based Systems:
+virtualenv -p python3.7 venv && source venv/bin/activate 
+
+** For Windows:
+virtualenv -p python3.7 venv && venv/scripts/activate 
+
 python setup.py sdist
 docker build --tag airflow_docker:1.0 .
 docker-compose -f docker-compose-CeleryExecutor.yml up -d
