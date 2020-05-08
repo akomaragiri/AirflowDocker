@@ -17,7 +17,7 @@
 
 AIRFLOW__CORE__SQL_ALCHEMY_CONN="postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
 AIRFLOW__CELERY__RESULT_BACKEND="db+postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
-
+AIRFLOW__CELERY__BROKER_URL="redis://$REDIS_PREFIX$REDIS_HOST:$REDIS_PORT/1"
 
 export \
 	AIRFLOW_HOME \
@@ -26,7 +26,7 @@ export \
 	AIRFLOW__CORE__EXECUTOR \
 	AIRFLOW__CORE__FERNET_KEY \
 	AIRFLOW__CORE__LOAD_EXAMPLES \
-	AIRFLOW__CORE__SQL_ALCHEMY_CONN \
+	AIRFLOW__CORE__SQL_ALCHEMY_CONN
 
 
 # Load DAGs examples (default: Yes)
@@ -41,7 +41,7 @@ else
 	REDIS_PREFIX=
 fi
 
-AIRFLOW__CELERY__BROKER_URL="redis://$REDIS_PREFIX$REDIS_HOST:$REDIS_PORT/1"
+# AIRFLOW__CELERY__BROKER_URL="redis://$REDIS_PREFIX$REDIS_HOST:$REDIS_PORT/1"
 
 
 case "$1" in
@@ -51,6 +51,8 @@ case "$1" in
 			pip3 install --user /TestPythonProject-0.0.0.tar.gz
 		fi
 		airflow initdb
+		airflow unpause python_dag
+		airflow trigger_dag python_dag
 		exec airflow webserver
 		;;
 	scheduler)
