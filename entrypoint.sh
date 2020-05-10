@@ -19,23 +19,13 @@ AIRFLOW__CORE__SQL_ALCHEMY_CONN="postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_
 AIRFLOW__CELERY__RESULT_BACKEND="db+postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
 
 
-export \
-	AIRFLOW_HOME \
-	AIRFLOW__CELERY__BROKER_URL \
-	AIRFLOW__CELERY__RESULT_BACKEND \
-	AIRFLOW__CORE__EXECUTOR \
-	AIRFLOW__CORE__FERNET_KEY \
-	AIRFLOW__CORE__LOAD_EXAMPLES \
-	AIRFLOW__CORE__SQL_ALCHEMY_CONN \
-
-
 # Load DAGs examples (default: Yes)
 if [[ -z "$AIRFLOW__CORE__LOAD_EXAMPLES" && "${LOAD_EX:=n}" == n ]]
 then
 	AIRFLOW__CORE__LOAD_EXAMPLES=False
 fi
 
-if [ -n "$REDIS_PASSWORD" ]; then
+if [[ -n "$REDIS_PASSWORD" ]]; then
 	REDIS_PREFIX=:${REDIS_PASSWORD}@
 else
 	REDIS_PREFIX=
@@ -43,30 +33,38 @@ fi
 
 AIRFLOW__CELERY__BROKER_URL="redis://$REDIS_PREFIX$REDIS_HOST:$REDIS_PORT/1"
 
+export \
+	AIRFLOW_HOME \
+	AIRFLOW__CELERY__BROKER_URL \
+	AIRFLOW__CELERY__RESULT_BACKEND \
+	AIRFLOW__CORE__EXECUTOR \
+	AIRFLOW__CORE__FERNET_KEY \
+	AIRFLOW__CORE__LOAD_EXAMPLES \
+	AIRFLOW__CORE__SQL_ALCHEMY_CONN
 
 case "$1" in
        	webserver)
-		if [ -e "/requirements.txt" ]; then
+       	if [[ -e "/requirements.txt" ]]; then
 			pip3 install --user --upgrade -r /requirements.txt
-			pip3 install --user /TestPythonProject-0.0.0.tar.gz
+			pip3 install --user /TestPythonProject-0.0.tar.gz
 		fi
 		airflow initdb
 		exec airflow webserver
 		;;
 	scheduler)
-		if [ -e "/requirements.txt" ]; then
+	    if [[ -e "/requirements.txt" ]]; then
 			pip3 install --user --upgrade -r /requirements.txt
-			pip3 install --user /TestPythonProject-0.0.0.tar.gz
+			pip3 install --user /TestPythonProject-0.0.tar.gz
 		fi
 		exec airflow scheduler
 		;;
 	flower|version)
-		exec airflow "$@"
+	    exec airflow "$@"
 		;;
-       	worker)
-		if [ -e "/requirements.txt" ]; then
+    worker)
+        if [[ -e "/requirements.txt" ]]; then
 			pip3 install --user --upgrade -r /requirements.txt
-			pip3 install --user /TestPythonProject-0.0.0.tar.gz
+			pip3 install --user /TestPythonProject-0.0.tar.gz
 		fi
 		exec airflow "$@"
 		;;
