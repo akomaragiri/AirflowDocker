@@ -1,4 +1,5 @@
-version: '2.1'
+version: '3.2'
+
 services:
     redis:
         image: 'redis:5.0.5'
@@ -87,18 +88,31 @@ services:
         depends_on:
             - scheduler
         volumes:
-            - ./input_files:/usr/local/airflow/input_files
-            - ./output_files:/usr/local/airflow/output_files    
-            # - ./dags:/usr/local/airflow/dags
-            # Uncomment to include custom plugins
-            # - ./plugins:/usr/local/airflow/plugins
+            - type: volume
+              source: input_vol
+              target: /usr/local/airflow/input_files
+              volume:
+                nocopy: true
+        # volumes:
+        #     - ./input_files:/usr/local/airflow/input_files
+        #     - ./output_files:/usr/local/airflow/output_files    
+        #     # - ./dags:/usr/local/airflow/dags
+        #     # Uncomment to include custom plugins
+        #     # - ./plugins:/usr/local/airflow/plugins
         environment:
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
             - EXECUTOR=Celery
             - DBGAP_INPUT_FILES=/usr/local/airflow/input_files
-            - DBGAP_OUTPUT_FILES=/usr/local/airflow/output_files
+            - DBGAP_OUTPUT_FILES=/usr/local/airflow/input_files
             # - POSTGRES_USER=airflow
             # - POSTGRES_PASSWORD=airflow
             # - POSTGRES_DB=airflow
             # - REDIS_PASSWORD=redispass
         command: worker
+
+volumes:
+    input_vol:
+        driver_opts:
+            type: "nfs"
+            o: "addr=192.168.1.152,nolock,soft,rw"
+            device: ":/var/nfs/gaptools"
