@@ -11,6 +11,7 @@ COPY /dags ./dags
 COPY entrypoint.sh /entrypoint.sh
 COPY requirements.txt /requirements.txt
 
+
 COPY src/ /usr/local/airflow/src/
 
 
@@ -26,6 +27,7 @@ ENV PYTHONPATH="/usr/local/airflow/"
 USER airflow
 
 ENTRYPOINT ["/entrypoint.sh"]
+
 
 # Just for documentation. Expose webserver, worker and flower respectively
 EXPOSE 8080 8793 5555
