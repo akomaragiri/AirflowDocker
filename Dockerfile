@@ -15,7 +15,7 @@ COPY requirements.txt /requirements.txt
 COPY src/ /usr/local/airflow/src/
 
 
-# COPY dist/TestPythonProject-0.0.0.tar.gz /TestPythonProject-0.0.0.tar.gz
+COPY dist/dbGaP-meta-package-1.2.14.post176+144cc55.tar.gz /dbGaP-meta-package-1.2.14.post176+144cc55.tar.gz
 
 # Add directory in which pip installs to PATH
 ENV PATH="/usr/local/airflow/.local/bin:${PATH}"

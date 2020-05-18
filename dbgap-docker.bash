@@ -197,5 +197,9 @@ echo "INPUT_VOL=${INPUT_DIR}" >> .env
 #########################
 if [ $DSTATE == "up" ]; then
    docker-compose -f docker-compose-CeleryExecutor.yml up -d
+   echo "The airflow server has started on port 8080"
+   echo "When the airflow process is complete run:"
+   echo "./dbgap-docker.bash down"
+   echo "to stop and delete the docker containers"
 fi
 
