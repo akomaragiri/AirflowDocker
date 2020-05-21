@@ -45,17 +45,35 @@ export \
 case "$1" in
        	webserver)
        	if [[ -e "/requirements.txt" ]]; then
-			pip3 install --user --upgrade -r /requirements.txt
-			pip3 install --user /TestPythonProject-0.0.tar.gz
+			pip install --user --upgrade -r /requirements.txt
+			pip install --user /TestPythonProject-0.0.tar.gz
+#			pip3 install --user /dbGaP-meta-package-1.2.14.post150+8d0a427.tar.gz
+			pip install --user /ncbi-mgv-utils-1.4.0.tar.gz
+			pip install --user /mgv_package_and_distribute-3.1.6.tar.gz
+			pip install --user /airflow-utils-7.0.2.tar.gz
+			pip install --user /sge_farm_management-2.2.0.tar.gz
+			pip install --user /airflow-adhoc-4.0.0.tar.gz
+			pip install --user /Submission_Processing.tar.gz
 		fi
+		cp -R /usr/local/airflow/.local/dags/ /usr/local/airflow/dags
+		cp -R /usr/local/airflow/.local/plugins/ /usr/local/airflow/plugins
 		airflow initdb
 		exec airflow webserver
 		;;
 	scheduler)
 	    if [[ -e "/requirements.txt" ]]; then
-			pip3 install --user --upgrade -r /requirements.txt
-			pip3 install --user /TestPythonProject-0.0.tar.gz
+			pip install --user --upgrade -r /requirements.txt
+			pip install --user /TestPythonProject-0.0.tar.gz
+#			pip3 install --user /dbGaP-meta-package-1.2.14.post150+8d0a427.tar.gz
+			pip install --user /ncbi-mgv-utils-1.4.0.tar.gz
+			pip install --user /mgv_package_and_distribute-3.1.6.tar.gz
+			pip install --user /airflow-utils-7.0.2.tar.gz
+			pip install --user /sge_farm_management-2.2.0.tar.gz
+			pip install --user /airflow-adhoc-4.0.0.tar.gz
+			pip install --user /Submission_Processing.tar.gz
 		fi
+		cp -R /usr/local/airflow/.local/dags/ /usr/local/airflow/dags
+		cp -R /usr/local/airflow/.local/plugins/ /usr/local/airflow/plugins
 		exec airflow scheduler
 		;;
 	flower|version)
@@ -63,9 +81,18 @@ case "$1" in
 		;;
     worker)
         if [[ -e "/requirements.txt" ]]; then
-			pip3 install --user --upgrade -r /requirements.txt
-			pip3 install --user /TestPythonProject-0.0.tar.gz
+			pip install --user --upgrade -r /requirements.txt
+			pip install --user /TestPythonProject-0.0.tar.gz
+#			pip3 install --user /dbGaP-meta-package-1.2.14.post150+8d0a427.tar.gz
+			pip install --user /ncbi-mgv-utils-1.4.0.tar.gz
+			pip install --user /mgv_package_and_distribute-3.1.6.tar.gz
+			pip install --user /airflow-utils-7.0.2.tar.gz
+			pip install --user /sge_farm_management-2.2.0.tar.gz
+			pip install --user /airflow-adhoc-4.0.0.tar.gz
+			pip install --user /Submission_Processing.tar.gz
 		fi
+		cp -R /usr/local/airflow/.local/dags/ /usr/local/airflow/dags
+		cp -R /usr/local/airflow/.local/plugins/ /usr/local/airflow/plugins
 		exec airflow "$@"
 		;;
 	*)
