@@ -29,6 +29,16 @@ USER airflow
 
 #RUN /usr/local/bin/python -m pip install --upgrade pip
 #RUN pip install --upgrade setuptools
+
+
+RUN pip install --user /TestPythonProject-0.0.tar.gz
+RUN pip install --user /ncbi-mgv-utils-1.4.0.tar.gz
+RUN pip install --user /mgv_package_and_distribute-3.1.6.tar.gz
+RUN pip install --user /airflow-utils-7.0.2.tar.gz
+RUN pip install --user /sge_farm_management-2.2.0.tar.gz
+RUN pip install --user /airflow-adhoc-4.0.0.tar.gz
+RUN pip install --user /Submission_Processing*.tar.gz
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Just for documentation. Expose webserver, worker and flower respectively
